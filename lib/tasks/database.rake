@@ -7,11 +7,9 @@ namespace :db do
     desc "Dump the database structure to a SQL file"
     task :dump, [:env, :file] => :environment do |t, args|
       env  = args[:env]  || ENV['RAILS_ENV'] || 'development'
-      file = args[:file] || "db/#{env}_structure.sql"
+      file = args[:file] || "db/structure.sql"
 
       ActiveRecord::Base.establish_connection(env)
-
-      puts "Dumping #{env} database to #{file}"
 
       case adapter_name = ActiveRecord::Base.connection.adapter_name
       when /mysql/i
@@ -29,11 +27,9 @@ namespace :db do
     desc "Load SQL structure file to the database"
     task :load, [:env, :file] => :environment do |t, args|
       env  = args[:env]  || ENV['RAILS_ENV'] || 'development'
-      file = args[:file] || "db/#{env}_structure.sql"
+      file = args[:file] || "db/structure.sql"
 
       ActiveRecord::Base.establish_connection(env)
-
-      puts "Loading #{file} structure to #{env} database"
 
       case adapter_name = ActiveRecord::Base.connection.adapter_name
       when /mysql/i
